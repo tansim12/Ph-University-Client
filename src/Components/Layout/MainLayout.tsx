@@ -1,37 +1,13 @@
 import React from "react";
 
 import { Layout, Menu, MenuProps, theme } from "antd";
+import {  Outlet } from "react-router-dom";
+import { adminRoutesItem } from "../../routes/route.admin";
 
 const { Header, Content, Footer, Sider } = Layout;
 
-const items: MenuProps["items"] = [
-  {
-    key: "1",
-    label: "Dashboard",
-  },
-  {
-    key: "2",
-    label: "Profile",
-  },
-  {
-    key: "3",
-    label: "User Management",
-    children: [
-      {
-        key: "11",
-        label: "Admin",
-      },
-      {
-        key: "22",
-        label: "Faculty",
-      },
-      {
-        key: "33",
-        label: "Student",
-      },
-    ],
-  },
-];
+const items: MenuProps["items"] = adminRoutesItem
+
 
 const MainLayout: React.FC = () => {
   const {
@@ -73,7 +49,7 @@ const MainLayout: React.FC = () => {
               borderRadius: borderRadiusLG,
             }}
           >
-            content
+            <Outlet />
           </div>
         </Content>
         <Footer style={{ textAlign: "center" }}>
