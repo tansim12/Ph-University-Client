@@ -1,14 +1,8 @@
 import React from "react";
-
-import { Layout, Menu, MenuProps, theme } from "antd";
-import {  Outlet } from "react-router-dom";
-import { adminRoutesItem } from "../../routes/route.admin";
-
-const { Header, Content, Footer, Sider } = Layout;
-
-const items: MenuProps["items"] = adminRoutesItem
-
-
+import { Layout, theme } from "antd";
+import { Outlet } from "react-router-dom";
+import Sidebar from "./Sidebar";
+const { Header, Content,  } = Layout;
 const MainLayout: React.FC = () => {
   const {
     token: { colorBgContainer, borderRadiusLG },
@@ -16,28 +10,7 @@ const MainLayout: React.FC = () => {
 
   return (
     <Layout className="h-screen">
-      <Sider
-        breakpoint="lg"
-        collapsedWidth="0"
-        onBreakpoint={(broken) => {
-          console.log(broken);
-        }}
-        onCollapse={(collapsed, type) => {
-          console.log(collapsed, type);
-        }}
-      >
-        <div className="flex justify-center items-center  ">
-          <div className="bg-white rounded-full size-20 flex justify-center items-center   font-extrabold  my-auto">
-            PH-UNI
-          </div>
-        </div>
-        <Menu
-          theme="dark"
-          mode="inline"
-          defaultSelectedKeys={["4"]}
-          items={items}
-        />
-      </Sider>
+      <Sidebar />
       <Layout>
         <Header style={{ padding: 0, background: colorBgContainer }} />
         <Content style={{ margin: "24px 16px 0" }}>
@@ -52,9 +25,7 @@ const MainLayout: React.FC = () => {
             <Outlet />
           </div>
         </Content>
-        <Footer style={{ textAlign: "center" }}>
-          Ant Design ©{new Date().getFullYear()} Created by Ant UED
-        </Footer>
+       
       </Layout>
     </Layout>
   );
