@@ -1,7 +1,7 @@
 import { useForm } from "react-hook-form";
 import { useLoginMutation } from "../redux/Features/Auth/authApi";
 import verifyToken from "../utils/verifyToken";
-import { useAppDispatch, useAppSelector } from "../redux/hooks";
+import { useAppDispatch } from "../redux/hooks";
 import { setUser } from "../redux/Features/Auth/authSlice";
 interface IFromValue {
   id: string;
@@ -10,7 +10,7 @@ interface IFromValue {
 
 const Login = () => {
   const dispatch = useAppDispatch();
-  const x = useAppSelector(state=>state?.auth.user)
+  
   const [login, { isLoading, error, isSuccess }] = useLoginMutation();
 
   const {
@@ -33,7 +33,6 @@ const Login = () => {
       );
     }
   };
-console.log(x);
 
   return (
     <div>
