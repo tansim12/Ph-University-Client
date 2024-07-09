@@ -1,12 +1,17 @@
 import { useForm } from "react-hook-form";
 import { useLoginMutation } from "../redux/Features/Auth/authApi";
+import verifyToken from "../utils/verifyToken";
+import { useAppDispatch, useAppSelector } from "../redux/hooks";
+import { setUser } from "../redux/Features/Auth/authSlice";
 interface IFromValue {
   id: string;
   password: string;
 }
 
 const Login = () => {
-  const [login, { data, isLoading, error, isSuccess }] = useLoginMutation();
+  const dispatch = useAppDispatch();
+  const x = useAppSelector(state=>state?.auth.user)
+  const [login, { isLoading, error, isSuccess }] = useLoginMutation();
 
   const {
     register,
@@ -19,10 +24,16 @@ const Login = () => {
     },
   });
 
-  const onSubmit = (fromValue: IFromValue) => {
-    login(fromValue);
+  const onSubmit = async (fromValue: IFromValue) => {
+    const res = await login(fromValue).unwrap();
+    if (res.success) {
+      const userData = verifyToken(res?.data?.accessToken);
+      dispatch(
+        setUser({ user: userData?.data, token: res?.data?.accessToken })
+      );
+    }
   };
-  console.log(data);
+console.log(x);
 
   return (
     <div>
