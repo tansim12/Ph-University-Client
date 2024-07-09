@@ -4,17 +4,16 @@ import generateRoutesNavLinks from "../../utils/generateRouteNavLinks";
 import { adminPath } from "../../routes/route.admin";
 import { facultyPath } from "../../routes/route.faculty";
 import { studentPath } from "../../routes/route.student";
-import { useAppSelector } from "../../redux/hooks";
+import useAuthUserInfo from "../../hooks/useAuthUserInfo";
 const Sidebar = () => {
-  const userData = useAppSelector((state) => state?.auth.user);
-console.log(userData);
+  const {role:Role} = useAuthUserInfo()
 
   const userRole = {
     ADMIN: "admin",
     FACULTY: "faculty",
     STUDENT: "student",
   };
-  const role: string = userData?.role;
+  const role: string = Role;
 
   let sidebarItems;
 
