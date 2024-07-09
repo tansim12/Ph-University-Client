@@ -1,7 +1,11 @@
 import { createSlice } from "@reduxjs/toolkit";
+type TUser = {
+  id: string;
+  role: string;
+};
 
 export type TInitialState = {
-  user: null | object;
+  user: null | TUser;
   token: null | string;
 };
 

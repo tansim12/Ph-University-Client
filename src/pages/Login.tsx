@@ -3,6 +3,7 @@ import { useLoginMutation } from "../redux/Features/Auth/authApi";
 import verifyToken from "../utils/verifyToken";
 import { useAppDispatch } from "../redux/hooks";
 import { setUser } from "../redux/Features/Auth/authSlice";
+import { useNavigate } from "react-router-dom";
 interface IFromValue {
   id: string;
   password: string;
@@ -11,6 +12,7 @@ interface IFromValue {
 const Login = () => {
   const dispatch = useAppDispatch();
   const [login, { isLoading, error, isSuccess }] = useLoginMutation();
+  const navigate = useNavigate()
 
   const {
     register,
@@ -30,6 +32,7 @@ const Login = () => {
       dispatch(
         setUser({ user: userData?.data, token: res?.data?.accessToken })
       );
+      navigate(`/${userData?.data?.role}/dashboard`)
     }
   };
 

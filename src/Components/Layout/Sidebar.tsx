@@ -6,14 +6,14 @@ import { facultyPath } from "../../routes/route.faculty";
 import { studentPath } from "../../routes/route.student";
 import useAuthUserInfo from "../../hooks/useAuthUserInfo";
 const Sidebar = () => {
-  const {role:Role} = useAuthUserInfo()
+  const { user } = useAuthUserInfo();
 
   const userRole = {
     ADMIN: "admin",
     FACULTY: "faculty",
     STUDENT: "student",
   };
-  const role: string = Role;
+  const role = user?.role as string;
 
   let sidebarItems;
 

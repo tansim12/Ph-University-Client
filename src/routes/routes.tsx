@@ -7,6 +7,7 @@ import Contact from "../pages/Contact";
 import { adminRoutes } from "./route.admin";
 import { facultyRoutes } from "./route.faculty";
 import { studentRoutes } from "./route.student";
+import PrivateRoute from "../Components/Layout/PrivateRoute";
 
 export const router = createBrowserRouter([
   {
@@ -33,7 +34,11 @@ export const router = createBrowserRouter([
   //   student routes
   {
     path: "/student",
-    element: <App />,
+    element: (
+      <PrivateRoute>
+        <App />
+      </PrivateRoute>
+    ),
     children: studentRoutes,
   },
   {
