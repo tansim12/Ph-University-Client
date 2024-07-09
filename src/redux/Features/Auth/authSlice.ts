@@ -1,6 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
 
-type TInitialState = {
+export type TInitialState = {
   user: null | object;
   token: null | string;
 };
