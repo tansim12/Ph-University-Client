@@ -1,12 +1,13 @@
 import React from "react";
 import { Button, Layout, theme } from "antd";
-import { Outlet } from "react-router-dom";
+import { Outlet, useNavigate } from "react-router-dom";
 import Sidebar from "./Sidebar";
 import { useAppDispatch } from "../../redux/hooks";
 import { logout } from "../../redux/Features/Auth/authSlice";
 import { toast } from "sonner";
 const { Header, Content } = Layout;
 const MainLayout: React.FC = () => {
+  const navigate = useNavigate();
   const {
     token: { colorBgContainer, borderRadiusLG },
   } = theme.useToken();
@@ -17,6 +18,7 @@ const MainLayout: React.FC = () => {
     dispatch(logout());
 
     toast.success("Logout Successfully done", { id: toastId, duration: 2000 });
+    navigate("/login");
   };
 
   return (

@@ -11,7 +11,7 @@ const AcademicSemester = () => {
     return <Navigate to={"/login"} replace={true} />;
   }
 
-  return <div></div>;
+  return <div>Academic Semester</div>;
 };
 
 export default AcademicSemester;
