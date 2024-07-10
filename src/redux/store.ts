@@ -20,9 +20,6 @@ const persistConfig = {
 
 const persistedReducer = persistReducer(persistConfig, authReducer); // target reducer and config
 
-// let store = createStore(persistedReducer)
-// let persistor = persistStore(store)
-
 export const store = configureStore({
   reducer: {
     auth: persistedReducer,

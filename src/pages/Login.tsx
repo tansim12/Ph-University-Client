@@ -4,7 +4,7 @@ import verifyToken from "../utils/verifyToken";
 import { useAppDispatch } from "../redux/hooks";
 import { setUser } from "../redux/Features/Auth/authSlice";
 import { useNavigate } from "react-router-dom";
-import { toast, Toaster } from "sonner";
+import { toast } from "sonner";
 interface IFromValue {
   id: string;
   password: string;
@@ -21,8 +21,8 @@ const Login = () => {
     formState: { errors },
   } = useForm<IFromValue>({
     defaultValues: {
-      id: "2031030003",
-      password: "student123456",
+      id: "A-0001",
+      password: "admin123456",
     },
   });
 
