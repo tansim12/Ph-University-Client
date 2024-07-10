@@ -4,6 +4,7 @@ import verifyToken from "../utils/verifyToken";
 import { useAppDispatch } from "../redux/hooks";
 import { setUser } from "../redux/Features/Auth/authSlice";
 import { useNavigate } from "react-router-dom";
+import { toast, Toaster } from "sonner";
 interface IFromValue {
   id: string;
   password: string;
@@ -12,7 +13,7 @@ interface IFromValue {
 const Login = () => {
   const dispatch = useAppDispatch();
   const [login, { isLoading, error, isSuccess }] = useLoginMutation();
-  const navigate = useNavigate()
+  const navigate = useNavigate();
 
   const {
     register,
@@ -26,13 +27,19 @@ const Login = () => {
   });
 
   const onSubmit = async (fromValue: IFromValue) => {
-    const res = await login(fromValue).unwrap();
-    if (res.success) {
-      const userData = verifyToken(res?.data?.accessToken);
-      dispatch(
-        setUser({ user: userData?.data, token: res?.data?.accessToken })
-      );
-      navigate(`/${userData?.data?.role}/dashboard`)
+    const toastId = toast.loading("Login pending...");
+    try {
+      const res = await login(fromValue).unwrap();
+      if (res.success) {
+        const userData = verifyToken(res?.data?.accessToken);
+        dispatch(
+          setUser({ user: userData?.data, token: res?.data?.accessToken })
+        );
+        navigate(`/${userData?.data?.role}/dashboard`);
+        toast.error("Login Successfully done", { id: toastId, duration: 2000 });
+      }
+    } catch (error) {
+      toast.error("something went wrong", { id: toastId, duration: 2000 });
     }
   };
 
@@ -90,6 +97,7 @@ const Login = () => {
           )}
         </form>
       </div>
+     
     </div>
   );
 };

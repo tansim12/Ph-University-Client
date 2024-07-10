@@ -1,18 +1,31 @@
 import React from "react";
-import { Layout, theme } from "antd";
+import { Button, Layout, theme } from "antd";
 import { Outlet } from "react-router-dom";
 import Sidebar from "./Sidebar";
-const { Header, Content,  } = Layout;
+import { useAppDispatch } from "../../redux/hooks";
+import { logout } from "../../redux/Features/Auth/authSlice";
+import { toast } from "sonner";
+const { Header, Content } = Layout;
 const MainLayout: React.FC = () => {
   const {
     token: { colorBgContainer, borderRadiusLG },
   } = theme.useToken();
+  const dispatch = useAppDispatch();
+
+  const handleLogOut = async () => {
+    const toastId = toast.loading("Logout pending");
+    dispatch(logout());
+
+    toast.success("Logout Successfully done", { id: toastId, duration: 2000 });
+  };
 
   return (
     <Layout className="h-screen">
       <Sidebar />
       <Layout>
-        <Header style={{ padding: 0, background: colorBgContainer }} />
+        <Header style={{ padding: 0, background: colorBgContainer }}>
+          <Button onClick={handleLogOut}>Log Out</Button>
+        </Header>
         <Content style={{ margin: "24px 16px 0" }}>
           <div
             style={{
@@ -25,7 +38,6 @@ const MainLayout: React.FC = () => {
             <Outlet />
           </div>
         </Content>
-       
       </Layout>
     </Layout>
   );
