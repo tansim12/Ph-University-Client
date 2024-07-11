@@ -1,4 +1,4 @@
-import { useForm } from "react-hook-form";
+import { FieldValues, useForm } from "react-hook-form";
 import { useLoginMutation } from "../redux/Features/Auth/authApi";
 import verifyToken from "../utils/verifyToken";
 import { useAppDispatch } from "../redux/hooks";
@@ -26,7 +26,7 @@ const Login = () => {
     },
   });
 
-  const onSubmit = async (fromValue: IFromValue) => {
+  const onSubmit = async (fromValue: FieldValues) => {
     const toastId = toast.loading("Login pending...");
     try {
       const res = await login(fromValue).unwrap();
