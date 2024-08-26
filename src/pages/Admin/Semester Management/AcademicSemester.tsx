@@ -61,7 +61,7 @@ const columns: TableColumnsType<TTableData> = [
 
 const AcademicSemester: React.FC = () => {
   const [params, setParams] = useState<TQueryParamAcademicSemester[]>([]);
-  const { data } = useGetAllAcademicSemesterQuery(params);
+  const { data, isFetching } = useGetAllAcademicSemesterQuery(params);
 
   const onChange: TableProps<TTableData>["onChange"] = (
     _pagination,
@@ -94,6 +94,7 @@ const AcademicSemester: React.FC = () => {
 
   return (
     <Table
+      loading={isFetching}
       columns={columns}
       dataSource={tableData}
       onChange={onChange}
