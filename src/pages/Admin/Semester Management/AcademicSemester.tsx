@@ -1,6 +1,5 @@
-
-import { useGetAllAcademicSemesterQuery } from "../../../redux/Features/AcademicSemester/academicSemesterApi";
 import { Navigate } from "react-router-dom";
+import { useGetAllAcademicSemesterQuery } from "../../../redux/Features/Admin/academicManagement.api";
 
 const AcademicSemester = () => {
   const { data, isError } = useGetAllAcademicSemesterQuery(undefined);
