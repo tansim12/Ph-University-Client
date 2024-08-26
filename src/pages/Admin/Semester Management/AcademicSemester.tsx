@@ -1,4 +1,4 @@
-import React from "react";
+
 import { useGetAllAcademicSemesterQuery } from "../../../redux/Features/AcademicSemester/academicSemesterApi";
 import { Navigate } from "react-router-dom";
 

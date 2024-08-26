@@ -5,6 +5,11 @@ import CreateStudent from "../pages/Admin/CreateStudent";
 import generateRoutes from "../utils/generateRoutes";
 import { IAccRoutes } from "../Types/routesTypes";
 import AcademicSemester from "../pages/Admin/Semester Management/AcademicSemester";
+import CreateAcademicSemester from "../pages/Admin/Semester Management/CreateAcademicSemester";
+import CreateAcademicFaculty from "../pages/Admin/Semester Management/CreateAcademicFaculty";
+import AcademicFaculty from "../pages/Admin/Semester Management/AcademicFaculty";
+import CreateAcademicDepartment from "../pages/Admin/Semester Management/CreateAcademicDepartment";
+import AcademicDepartment from "../pages/Admin/Semester Management/AcademicDepartment";
 
 export const adminPath: IAccRoutes[] = [
   {
@@ -16,9 +21,34 @@ export const adminPath: IAccRoutes[] = [
     name: "Academic Management",
     children: [
       {
+        name: "C. A. Semester",
+        path: "create-academic-semester",
+        element: <CreateAcademicSemester />,
+      },
+      {
         name: "Academic Semester",
         path: "academic-semester",
         element: <AcademicSemester />,
+      },
+      {
+        name: "C. A. Faculty",
+        path: "create-academic-faculty",
+        element: <CreateAcademicFaculty />,
+      },
+      {
+        name: "Academic Faculty",
+        path: "academic-faculty",
+        element: <AcademicFaculty />,
+      },
+      {
+        name: "C. A. Department",
+        path: "create-academic-department",
+        element: <CreateAcademicDepartment />,
+      },
+      {
+        name: "Academic Department",
+        path: "academic-department",
+        element: <AcademicDepartment />,
       },
     ],
     path: "",

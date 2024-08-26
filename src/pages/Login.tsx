@@ -90,14 +90,13 @@ const Login = () => {
           </button>
 
           {error && (
-            <p className="text-red-500 text-sm mt-4">{error?.data?.message}</p>
+            <p className="text-red-500 text-sm mt-4">{error?.data?.message }</p>
           )}
           {isSuccess && (
             <p className="text-green-500 text-sm mt-4">Login successful!</p>
           )}
         </form>
       </div>
-     
     </div>
   );
 };
