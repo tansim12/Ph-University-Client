@@ -1,6 +1,5 @@
 import { toast } from "sonner";
-import { TResponseError } from "../Types/responseError.type";
-
+import { TResponseError } from "../Types/response.type";
 
 export const handleApiError = (error: unknown, toastId?: number | string) => {
   const apiError = error as TResponseError;

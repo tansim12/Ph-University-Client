@@ -1,94 +1,101 @@
 import { useGetAllAcademicSemesterQuery } from "../../../redux/Features/Admin/academicManagement.api";
-import React from "react";
+import React, { useState } from "react";
 import { Table } from "antd";
 import type { TableColumnsType, TableProps } from "antd";
 import { TAcademicSemester } from "../../../Types/academicSemesterManage.type";
+import { TQueryParamAcademicSemester } from "../../../Types/global.type";
 
-interface DataType {
-  key: React.Key;
-  name: string;
-  age: number;
-  address: string;
-}
+export type TTableData = Pick<
+  TAcademicSemester,
+  "name" | "year" | "startMonth" | "endMonth"
+>;
 
-const columns: TableColumnsType<TAcademicSemester> = [
+const columns: TableColumnsType<TTableData> = [
   {
     title: "Name",
     dataIndex: "name",
     showSorterTooltip: { target: "full-header" },
     filters: [
       {
-        text: "Joe",
-        value: "Joe",
+        text: "Autumn",
+        value: "Autumn",
       },
       {
-        text: "Jim",
-        value: "Jim",
+        text: "Summer",
+        value: "Summer",
       },
       {
-        text: "Submenu",
-        value: "Submenu",
-        children: [
-          {
-            text: "Green",
-            value: "Green",
-          },
-          {
-            text: "Black",
-            value: "Black",
-          },
-        ],
+        text: "Fall",
+        value: "Fall",
       },
     ],
-
   },
- 
+
   {
     title: "Year",
     dataIndex: "year",
     filters: [
       {
-        text: "London",
-        value: "London",
+        text: "2024",
+        value: "2024",
       },
       {
-        text: "New York",
-        value: "New York",
+        text: "2025",
+        value: "2025",
+      },
+      {
+        text: "2026",
+        value: "2026",
       },
     ],
-    
   },
   {
     title: "Start Month",
     dataIndex: "startMonth",
-    
   },
   {
     title: "End Month",
     dataIndex: "endMonth",
-    
   },
 ];
 
-
-
-const onChange: TableProps<DataType>["onChange"] = (
-  pagination,
-  filters,
-  sorter,
-  extra
-) => {
-  console.log("params", pagination, filters, sorter, extra);
-};
-
 const AcademicSemester: React.FC = () => {
-  const { data } = useGetAllAcademicSemesterQuery(undefined);
-  console.log(data);
-  
+  const [params, setParams] = useState<TQueryParamAcademicSemester[]>([]);
+  const { data } = useGetAllAcademicSemesterQuery(params);
+
+  const onChange: TableProps<TTableData>["onChange"] = (
+    _pagination,
+    filters,
+    _sorter,
+    extra
+  ) => {
+    if (extra.action === "filter") {
+      const queryParams: TQueryParamAcademicSemester[] = [];
+
+      filters.name?.forEach((item) =>
+        queryParams.push({ name: "name", value: item })
+      );
+
+      filters.year?.forEach((item) =>
+        queryParams.push({ name: "year", value: item })
+      );
+
+      setParams(queryParams);
+    }
+  };
+
+  const tableData = data?.map(({ _id, name, startMonth, endMonth, year }) => ({
+    key: _id,
+    name,
+    startMonth,
+    endMonth,
+    year,
+  }));
+
   return (
     <Table
       columns={columns}
-      dataSource={data}
+      dataSource={tableData}
       onChange={onChange}
       showSorterTooltip={{ target: "sorter-icon" }}
     />
