@@ -3,6 +3,8 @@ import PHForm from "../../../Components/From/PHForm";
 import PHSelect from "../../../Components/From/PHSelect";
 import { academicSemesterNameAndCode } from "../../../Const/academicManage.const";
 import { monthOptions } from "../../../Const/global.const";
+import { academicSemesterSchema } from "../../../Schema/academicSemesterManage.schema";
+import { zodResolver } from "@hookform/resolvers/zod";
 
 const CreateAcademicSemester = () => {
   const currentYear = new Date().getFullYear();
@@ -32,7 +34,10 @@ const CreateAcademicSemester = () => {
 
       <div className="grid grid-cols-12 justify-center items-center  rounded-lg ">
         <div className=" col-span-6 w-full">
-          <PHForm onSubmit={onSubmit}>
+          <PHForm
+            onSubmit={onSubmit}
+            resolver={zodResolver(academicSemesterSchema)}
+          >
             <PHSelect
               label="Name"
               name="name"
@@ -51,8 +56,10 @@ const CreateAcademicSemester = () => {
               name="endMonth"
               options={monthOptions}
             />
-            
-            <button type="submit" className="border border-blue-500 px-3 py-2">Submit</button>
+
+            <button type="submit" className="border border-blue-500 px-3 py-2">
+              Submit
+            </button>
           </PHForm>
         </div>
       </div>
