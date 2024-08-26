@@ -22,7 +22,7 @@ const MainLayout: React.FC = () => {
   };
 
   return (
-    <Layout className="h-screen">
+    <Layout className="h-full">
       <Sidebar />
       <Layout>
         <Header style={{ padding: 0, background: colorBgContainer }}>
