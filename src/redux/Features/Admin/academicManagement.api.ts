@@ -9,6 +9,15 @@ const academicSemesterManagementApi = baseApi.injectEndpoints({
           method: "GET",
         };
       },
+      transformResponse: (response) => {
+        const data =
+          response && typeof response === "object" && "data" in response
+            ? response.data
+            : null;
+
+        // Return the transformed data or a custom value
+        return data || [];
+      },
     }),
     createAcademicSemester: builder.mutation({
       query: (body) => ({

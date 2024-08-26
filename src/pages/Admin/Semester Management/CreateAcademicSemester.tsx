@@ -7,6 +7,7 @@ import { academicSemesterSchema } from "../../../Schema/academicSemesterManage.s
 import { zodResolver } from "@hookform/resolvers/zod";
 import { toast } from "sonner";
 import { useCreateAcademicSemesterMutation } from "../../../redux/Features/Admin/academicManagement.api";
+import { handleApiError } from "../../../utils/handleApiError";
 
 const CreateAcademicSemester = () => {
   const [createAcademicSemester] = useCreateAcademicSemesterMutation();
@@ -28,6 +29,8 @@ const CreateAcademicSemester = () => {
     };
 
     const toastId = toast.message("Semester Create Loading");
+    console.log(typeof toastId);
+
     try {
       const res = await createAcademicSemester(semesterData).unwrap();
       if (res?.success) {
@@ -37,7 +40,7 @@ const CreateAcademicSemester = () => {
         });
       }
     } catch (error) {
-      toast.error("Create failed", { id: toastId, duration: 3000 });
+      handleApiError(error,toastId);
     }
   };
 
