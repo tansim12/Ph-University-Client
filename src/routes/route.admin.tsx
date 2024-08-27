@@ -1,7 +1,7 @@
 import AdminDashboard from "../pages/Admin/AdminDashboard";
-import CreateAdmin from "../pages/Admin/CreateAdmin";
-import CreateFaculty from "../pages/Admin/CreateFaculty";
-import CreateStudent from "../pages/Admin/CreateStudent";
+import CreateAdmin from "../pages/Admin/User Management/CreateAdmin";
+import CreateFaculty from "../pages/Admin/User Management/CreateFaculty";
+import CreateStudent from "../pages/Admin/User Management/CreateStudent";
 import generateRoutes from "../utils/generateRoutes";
 import { IAccRoutes } from "../Types/routesTypes";
 import AcademicSemester from "../pages/Admin/Semester Management/AcademicSemester";
