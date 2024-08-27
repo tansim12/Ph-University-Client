@@ -7,5 +7,7 @@ export interface TAcademicSemester {
   endMonth: string;
   createdAt: string;
   updatedAt: string;
+  academicFaculty?: {
+    name: string;
+  };
 }
-

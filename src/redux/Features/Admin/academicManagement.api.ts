@@ -64,6 +64,25 @@ const academicSemesterManagementApi = baseApi.injectEndpoints({
         body: body,
       }),
     }),
+    getAllAcademicDepartment: builder.query({
+      query: (args) => {
+        const params = new URLSearchParams();
+        if (args) {
+          args.forEach((item: TQueryParamAcademicSemester) => {
+            params.append(item.name, item.value as string);
+          });
+        }
+
+        return {
+          url: "/academic-department",
+          method: "GET",
+          params: params,
+        };
+      },
+      transformResponse: (response: TReduxResponse<TAcademicSemester[]>) => {
+        return response?.data;
+      },
+    }),
   }),
 });
 
@@ -73,4 +92,5 @@ export const {
   useCreateAcademicFacultyMutation,
   useGetAllAcademicFacultyQuery,
   useCreateAcademicDepartmentMutation,
+  useGetAllAcademicDepartmentQuery,
 } = academicSemesterManagementApi;
