@@ -3,9 +3,28 @@ import PHInput from "../../../Components/From/PHInput";
 import PHForm from "../../../Components/From/PHForm";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { academicFacultySchema } from "../../../Schema/academicSemesterManage.schema";
+import { useCreateAcademicFacultyMutation } from "../../../redux/Features/Admin/academicManagement.api";
+import { handleApiError } from "../../../utils/handleApiError";
+import { useNavigate } from "react-router-dom";
+import { toast } from "sonner";
 
 const CreateAcademicFaculty = () => {
+  const navigate = useNavigate();
+  const [createAcademicFaculty] = useCreateAcademicFacultyMutation();
   const onSubmit: SubmitHandler<FieldValues> = async (data) => {
+    const toastId = toast.message("Creating");
+    try {
+      const res = await createAcademicFaculty(data).unwrap();
+      if (res?.success) {
+        toast.success("Create Successfully done", {
+          id: toastId,
+          duration: 3000,
+        });
+        navigate("/admin/academic-faculty")
+      }
+    } catch (error) {
+      handleApiError(error, toastId);
+    }
     console.log(data);
   };
   return (
