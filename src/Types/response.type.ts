@@ -1,4 +1,10 @@
 import { BaseQueryApi } from "@reduxjs/toolkit/query";
+export interface TMeta {
+  page: number;
+  limit: number;
+  total: number;
+  totalPage: number;
+}
 
 export type TResponseError = {
   status: number;
@@ -12,6 +18,7 @@ export type TResponseError = {
 
 export type TResponse<T> = {
   data?: T;
+  meta?: TMeta;
   error?: TResponseError;
   success?: boolean;
   message?: string;

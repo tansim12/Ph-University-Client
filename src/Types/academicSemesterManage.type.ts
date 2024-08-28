@@ -11,3 +11,20 @@ export interface TAcademicSemester {
     name: string;
   };
 }
+
+export interface TAcademicDepartment {
+  _id: string
+  name: string
+  academicFaculty: TAcademicFaculty
+  createdAt: string
+  updatedAt: string
+  __v: number
+}
+
+export interface TAcademicFaculty {
+  _id: string
+  name: string
+  createdAt: string
+  updatedAt: string
+  __v: number
+}

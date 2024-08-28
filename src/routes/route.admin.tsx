@@ -10,6 +10,7 @@ import CreateAcademicFaculty from "../pages/Admin/Semester Management/CreateAcad
 import AcademicFaculty from "../pages/Admin/Semester Management/AcademicFaculty";
 import CreateAcademicDepartment from "../pages/Admin/Semester Management/CreateAcademicDepartment";
 import AcademicDepartment from "../pages/Admin/Semester Management/AcademicDepartment";
+import AllStudents from "../pages/Admin/User Management/AllStudents";
 
 export const adminPath: IAccRoutes[] = [
   {
@@ -59,6 +60,16 @@ export const adminPath: IAccRoutes[] = [
     name: "User Management",
     children: [
       {
+        name: "Create student",
+        path: "create-student",
+        element: <CreateStudent />,
+      },
+      {
+        name: "V. Student",
+        path: "all-students",
+        element: <AllStudents />,
+      },
+      {
         name: "Create Admin",
         path: "create-admin",
         element: <CreateAdmin />,
@@ -68,11 +79,7 @@ export const adminPath: IAccRoutes[] = [
         path: "create-faculty",
         element: <CreateFaculty />,
       },
-      {
-        name: "Create student",
-        path: "create-student",
-        element: <CreateStudent />,
-      },
+      
     ],
     path: "",
     element: undefined,
