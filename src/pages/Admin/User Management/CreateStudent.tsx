@@ -9,6 +9,10 @@ import {
   useGetAllAcademicDepartmentQuery,
   useGetAllAcademicSemesterQuery,
 } from "../../../redux/Features/Admin/academicManagement.api";
+import { useCreateStudentMutation } from "../../../redux/Features/Admin/userManagement.api";
+import { handleApiError } from "../../../utils/handleApiError";
+import { toast } from "sonner";
+import PHFileUpload from "../../../Components/From/PHFileUpload";
 
 const defaultData = {
   name: {
@@ -17,7 +21,7 @@ const defaultData = {
     lastName: "Williams",
   },
   age: 21,
-  email: "student4@example444.com",
+  // email: "student445545545545454@example444.com",
   gender: "female",
   //   profileImg: "http://example.com/images/emma_williams.jpg",
   blood: "AB+",
@@ -40,12 +44,15 @@ const defaultData = {
     motherOccupation: "Scientist",
   },
 
-    academicDepartment: "667906d93b5106593755ea9f",
-    admissionSemester: "666152858575fc5a25f16b12",
+  academicDepartment: "667906d93b5106593755ea9f",
+  admissionSemester: "666152858575fc5a25f16b12",
   //   isDelete: false,
 };
 
 const CreateStudent = () => {
+  const [createStudent,] = useCreateStudentMutation();
+
+  // get A. semester data
   const { data: semesterData, isLoading: sIsLoading } =
     useGetAllAcademicSemesterQuery(undefined);
   const semesterDataOptions = semesterData?.map((item) => ({
@@ -53,6 +60,7 @@ const CreateStudent = () => {
     value: item?._id,
   }));
 
+  //   get A. department data
   const { data: departmentData, isLoading: dIsLoading } =
     useGetAllAcademicDepartmentQuery(undefined, { skip: sIsLoading });
   const departmentDataOptions = departmentData?.map((item) => ({
@@ -60,15 +68,34 @@ const CreateStudent = () => {
     value: item?._id,
   }));
 
-  const onSubmit: SubmitHandler<FieldValues> = (data) => {
-    console.log(data);
+  const onSubmit: SubmitHandler<FieldValues> = async (data) => {
+    const payload = {
+      password: "password1234",
+      student: data,
+    };
+    const formData = new FormData();
+    formData.append("data", JSON.stringify(payload));
+    formData.append("file", data?.file)
 
-    // const formData = new FormData();
-    // formData.append("data", JSON.stringify(data));
+    const toastId = toast.message("Creating");
+    try {
+      const res = await createStudent(formData).unwrap();
+      if (res?.success) {
+        toast.success("Student Create Successfully done", {
+          id: toastId,
+          duration: 3000,
+        });
+      }
+    } catch (error) {
+      handleApiError(error, toastId);
+    }
+
 
     // ! this check just local
     // console.log(Object.fromEntries(formData));
   };
+
+
   return (
     <div>
       <p className="text-lg text-center my-4"> Create Student </p>
@@ -101,7 +128,10 @@ const CreateStudent = () => {
               <PHSelect name="blood" label="Blood" options={bloodOptions} />
             </div>
             <div>
-              <PHDatePicker name="dateOfBirth" label="Date Of Birth" />
+              <PHDatePicker name="dateOfBirth" label="Date Of Birth"/>
+            </div>
+            <div>
+              <PHFileUpload name="file" label="Picture"  type="file"  />
             </div>
           </div>
           {/* Address info div  */}
