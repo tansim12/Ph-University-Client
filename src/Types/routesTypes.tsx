@@ -6,8 +6,10 @@ export interface IAccRoutes {
   element: ReactNode;
   children?: IAccRoutes[];
 }
-export interface IAccRoutesItem {
-  key: string;
-  label: ReactNode | string;
-  children?: IAccRoutesItem[] ;
-}
+export type IAccRoutesItem =
+  | {
+      key: string;
+      label: ReactNode | string;
+      children?: IAccRoutesItem[];
+    }
+  | undefined;

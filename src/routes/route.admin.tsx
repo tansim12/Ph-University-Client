@@ -11,6 +11,7 @@ import AcademicFaculty from "../pages/Admin/Semester Management/AcademicFaculty"
 import CreateAcademicDepartment from "../pages/Admin/Semester Management/CreateAcademicDepartment";
 import AcademicDepartment from "../pages/Admin/Semester Management/AcademicDepartment";
 import AllStudents from "../pages/Admin/User Management/AllStudents";
+import UpdateStudent from "../pages/Admin/User Management/UpdateStudent";
 
 export const adminPath: IAccRoutes[] = [
   {
@@ -70,6 +71,10 @@ export const adminPath: IAccRoutes[] = [
         element: <AllStudents />,
       },
       {
+        path: "student-update/:id",
+        element: <UpdateStudent />,
+      },
+      {
         name: "Create Admin",
         path: "create-admin",
         element: <CreateAdmin />,
@@ -79,7 +84,6 @@ export const adminPath: IAccRoutes[] = [
         path: "create-faculty",
         element: <CreateFaculty />,
       },
-      
     ],
     path: "",
     element: undefined,

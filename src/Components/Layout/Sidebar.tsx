@@ -31,9 +31,11 @@ const Sidebar = () => {
       break;
   }
 
+  console.log(sidebarItems);
+
   return (
     <Sider
-    style={{ height: '100vh', position: 'sticky', top: '0', left: '0' }}
+      style={{ height: "100vh", position: "sticky", top: "0", left: "0" }}
       breakpoint="lg"
       collapsedWidth="0"
       onBreakpoint={(broken) => {
@@ -52,7 +54,7 @@ const Sidebar = () => {
         theme="dark"
         mode="inline"
         defaultSelectedKeys={["4"]}
-        items={sidebarItems}
+        items={sidebarItems as unknown as never}
       />
     </Sider>
   );

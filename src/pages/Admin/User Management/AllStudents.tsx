@@ -4,6 +4,7 @@ import type { PaginationProps, TableColumnsType, TableProps } from "antd";
 import { TQueryParamAcademicSemester } from "../../../Types/global.type";
 import { useGetAllStudentsQuery } from "../../../redux/Features/Admin/userManagement.api";
 import { TStudent } from "../../../Types";
+import { useNavigate } from "react-router-dom";
 
 // export type TTableData = {
 //   _id:string,
@@ -13,6 +14,7 @@ import { TStudent } from "../../../Types";
 export type TTableData = Pick<TStudent, "name" | "id" | "_id">;
 
 const AllStudents: React.FC = () => {
+  const navigate = useNavigate()
   const [params, setParams] = useState<TQueryParamAcademicSemester[]>([]);
   const { data: studentData, isFetching: studentIsFetching } =
     useGetAllStudentsQuery([{ name: "sort", value: "id" },{ name: "limit", value: 3 }, ...params]);
@@ -80,6 +82,7 @@ const AllStudents: React.FC = () => {
 
   // Example handler functions for Update and Delete
   const handleUpdate = (id: string) => {
+    navigate(`/admin/student-update/${id}`)
     console.log("Update clicked for id:", id);
     // Implement update logic here
   };
