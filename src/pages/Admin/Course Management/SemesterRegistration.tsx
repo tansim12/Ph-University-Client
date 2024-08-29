@@ -6,8 +6,13 @@ import { semesterRegistrationStatus } from "../../../Types/couseManagement.type"
 import PHDatePicker from "../../../Components/From/PHDatePicker";
 import PHInput from "../../../Components/From/PHInput";
 import { Button } from "antd";
+import { useCreateSemesterRegistrationMutation } from "../../../redux/Features/Admin/couseManagement.api";
+import { toast } from "sonner";
+import { handleApiError } from "../../../utils/handleApiError";
 
 const SemesterRegistration = () => {
+  const [createSemesterRegistration] = useCreateSemesterRegistrationMutation();
+
   // get A. semester data
   const { data: semesterData, isLoading: semesterIsLoading } =
     useGetAllAcademicSemesterQuery([{ name: "sort", value: "year" }]);
@@ -20,21 +25,29 @@ const SemesterRegistration = () => {
     console.log("click");
 
     console.log(data);
+    const payload = {
+        academicSemester: data?.academicSemester,
+      status: data?.status,
+      startDate: data?.startDate,
+      endDate: data?.endDate,
+      minCredit: Number(data?.minCredit),
+      maxCredit: Number(data?.maxCredit),
+    };
+console.log(payload);
 
-    // const toastId = toast.message("Semester Create Loading");
-    // console.log(typeof toastId);
+    const toastId = toast.message("Semester Create Loading")
 
-    // try {
-    //   const res = await createAcademicSemester(semesterData).unwrap();
-    //   if (res?.success) {
-    //     toast.success("Academic Semester Create Successfully done", {
-    //       id: toastId,
-    //       duration: 3000,
-    //     });
-    //   }
-    // } catch (error) {
-    //   handleApiError(error,toastId);
-    // }
+    try {
+      const res = await createSemesterRegistration(payload).unwrap();
+      if (res?.success) {
+        toast.success(" Semester Registration Successfully done", {
+          id: toastId,
+          duration: 3000,
+        });
+      }
+    } catch (error) {
+      handleApiError(error, toastId);
+    }
   };
 
   return (
@@ -45,15 +58,12 @@ const SemesterRegistration = () => {
 
       <div className="grid grid-cols-12 justify-center items-center  rounded-lg ">
         <div className=" col-span-6 w-full">
-          <PHForm
-            onSubmit={onSubmit}
-           
-          >
+          <PHForm onSubmit={onSubmit}>
             <div>
               <PHSelect
                 disabled={semesterIsLoading}
-                name="Academic Semester"
-                label="academicSemester"
+                label="Academic Semester"
+                name="academicSemester"
                 options={semesterDataOptions!}
               />
             </div>
