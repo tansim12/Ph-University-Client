@@ -22,9 +22,7 @@ const userManagementApi = baseApi.injectEndpoints({
           params: params,
         };
       },
-      transformResponse: (response: TReduxResponse<TStudent[]>) => {
-        console.log(response);
-        
+      transformResponse: (response: TReduxResponse<TStudent[]>) => {       
         return response?.data;
       },
     }),

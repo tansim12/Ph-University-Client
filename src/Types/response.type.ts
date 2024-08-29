@@ -15,6 +15,13 @@ export type TResponseError = {
     stack?: string;
   };
 };
+// export type TNewResponse<T> ={
+//   meta:TMeta,
+//   result:T
+//   error?: TResponseError;
+//   success?: boolean;
+//   message?: string;
+// }
 
 export type TResponse<T> = {
   data?: T;
@@ -25,3 +32,4 @@ export type TResponse<T> = {
 };
 
 export type TReduxResponse<T> = TResponse<T> & BaseQueryApi;
+// export type TReduxResponse2<T> =TNewResponse<T> & BaseQueryApi;
