@@ -12,6 +12,12 @@ import CreateAcademicDepartment from "../pages/Admin/Semester Management/CreateA
 import AcademicDepartment from "../pages/Admin/Semester Management/AcademicDepartment";
 import AllStudents from "../pages/Admin/User Management/AllStudents";
 import UpdateStudent from "../pages/Admin/User Management/UpdateStudent";
+import SemesterRegistration from "../pages/Admin/Course Management/SemesterRegistration";
+import RegisteredSemester from "../pages/Admin/Course Management/RegisteredSemester";
+import CreateCourse from "../pages/Admin/Course Management/CreateCourse";
+import Courses from "../pages/Admin/Course Management/Courses";
+import OfferCourse from "../pages/Admin/Course Management/OfferCourse";
+import OfferedCoursesAdmin from "../pages/Admin/Course Management/OfferedCoursesAdmin";
 
 export const adminPath: IAccRoutes[] = [
   {
@@ -57,6 +63,7 @@ export const adminPath: IAccRoutes[] = [
     element: undefined,
   },
 
+  // user management
   {
     name: "User Management",
     children: [
@@ -83,6 +90,44 @@ export const adminPath: IAccRoutes[] = [
         name: "Create Faculty",
         path: "create-faculty",
         element: <CreateFaculty />,
+      },
+    ],
+    path: "",
+    element: undefined,
+  },
+  // course management
+  {
+    name: "Course Management",
+    children: [
+      {
+        name: "S. Registration",
+        path: "semester-registration",
+        element: <SemesterRegistration />,
+      },
+      {
+        name: "Registered S.",
+        path: "registered-semester",
+        element: <RegisteredSemester />,
+      },
+      {
+        name: "Create Course",
+        path: "create-course",
+        element: <CreateCourse />,
+      },
+      {
+        name: "Courses",
+        path: "all-courses",
+        element: <Courses />,
+      },
+      {
+        name: "Offer Course",
+        path: "offer-course",
+        element: <OfferCourse />,
+      },
+      {
+        name: "Offered Courses",
+        path: "offered-courses",
+        element: <OfferedCoursesAdmin />,
       },
     ],
     path: "",
