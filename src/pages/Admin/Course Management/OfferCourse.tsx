@@ -10,15 +10,19 @@ import {
   useGetAllAcademicDepartmentQuery,
   useGetAllAcademicFacultyQuery,
 } from "../../../redux/Features/Admin/academicManagement.api";
-import { useGetAllFacultiesQuery } from "../../../redux/Features/Admin/userManagement.api";
 import PHInput from "../../../Components/From/PHInput";
 import { Button } from "antd";
 import PHTimePicker from "../../../Components/From/PHTimePicker";
 import { useState } from "react";
 import PHSelectWithWatch from "../../../Components/From/PHSelectWithWatch";
+import { toast } from "sonner";
+import { useCreateOfferCourseMutation } from "../../../redux/Features/Admin/offerCourseManagement.api";
+import { handleApiError } from "../../../utils/handleApiError";
+import moment from "moment";
 
 const OfferCourse = () => {
   const [courseId, setCourseId] = useState("");
+  const [createOfferCourse] = useCreateOfferCourseMutation();
   const { data: courseData } = useGetAllCoursesQuery([
     { name: "sort", value: "-createdAt" },
   ]);
@@ -49,12 +53,13 @@ const OfferCourse = () => {
   }));
   const { data: assignFaculties } =
     useGetAssignFacultiesByCourseQuery(courseId);
-  console.log(assignFaculties);
 
-  const assignFacultiesOptions = assignFaculties?.faculties?.map((item) => ({
-    label: item?.name?.firstName,
-    value: item?._id,
-  }));
+  const assignFacultiesOptions = assignFaculties?.faculties?.map(
+    (item: any) => ({
+      label: item?.name?.firstName,
+      value: item?._id,
+    })
+  );
 
   const days = ["Sat", "Sun", "Mon", "Tue", "Wed", "Thu", "Fri"];
   const daysOptions = days?.map((i) => ({
@@ -62,8 +67,28 @@ const OfferCourse = () => {
     value: i,
   }));
 
-  const handleSubmit: SubmitHandler<FieldValues> = (data) => {
-    console.log(data);
+  const handleSubmit: SubmitHandler<FieldValues> = async (data) => {
+
+    const payload = {
+      ...data,
+      maxCapacity: Number(data?.maxCapacity),
+      section: Number(data?.section),
+      startTime: moment(new Date(data?.startTime)).format("HH:mm"),
+      endTime: moment(new Date(data?.endTime)).format("HH:mm"),
+    };
+
+    const toastId = toast.message("Semester Create Loading");
+    try {
+      const res = await createOfferCourse(payload).unwrap();
+      if (res?.success) {
+        toast.success("Academic Semester Create Successfully done", {
+          id: toastId,
+          duration: 3000,
+        });
+      }
+    } catch (error) {
+      handleApiError(error, toastId);
+    }
   };
   return (
     <>
