@@ -30,7 +30,7 @@ const baseQueryWithRefreshToken: BaseQueryFn<
 > = async (args, api, extraOptions): Promise<any> => {
   let result = await baseQueryFn(args, api, extraOptions);
   if (result?.error?.status === 404) {
-    handleApiError(result?.error)
+    handleApiError(result?.error);
   }
   if (result?.error?.status === 401) {
     const res = await fetch("http://localhost:5000/api/v1/auth/refresh-token", {
@@ -58,6 +58,7 @@ const baseQueryWithRefreshToken: BaseQueryFn<
 
 // Define a service using a base URL and expected endpoints
 export const baseApi = createApi({
+  tagTypes:["CourseManage"],
   reducerPath: "baseApi",
   baseQuery: baseQueryWithRefreshToken,
   endpoints: () => ({}),
