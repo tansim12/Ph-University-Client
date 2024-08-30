@@ -33,8 +33,6 @@ const SemesterRegistration = () => {
       minCredit: Number(data?.minCredit),
       maxCredit: Number(data?.maxCredit),
     };
-console.log(payload);
-
     const toastId = toast.message("Semester Create Loading")
 
     try {
