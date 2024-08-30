@@ -2,13 +2,13 @@ import { FieldValues, SubmitHandler } from "react-hook-form";
 import PHForm from "../../../Components/From/PHForm";
 import PHSelect from "../../../Components/From/PHSelect";
 import { useGetAllAcademicSemesterQuery } from "../../../redux/Features/Admin/academicManagement.api";
-import { semesterRegistrationStatus } from "../../../Types/couseManagement.type";
 import PHDatePicker from "../../../Components/From/PHDatePicker";
 import PHInput from "../../../Components/From/PHInput";
 import { Button } from "antd";
 import { useCreateSemesterRegistrationMutation } from "../../../redux/Features/Admin/couseManagement.api";
 import { toast } from "sonner";
 import { handleApiError } from "../../../utils/handleApiError";
+import { semesterRegistrationStatus } from "../../../Const/courseManagement.const";
 
 const SemesterRegistration = () => {
   const [createSemesterRegistration] = useCreateSemesterRegistrationMutation();
@@ -26,14 +26,14 @@ const SemesterRegistration = () => {
 
     console.log(data);
     const payload = {
-        academicSemester: data?.academicSemester,
+      academicSemester: data?.academicSemester,
       status: data?.status,
       startDate: data?.startDate,
       endDate: data?.endDate,
       minCredit: Number(data?.minCredit),
       maxCredit: Number(data?.maxCredit),
     };
-    const toastId = toast.message("Semester Create Loading")
+    const toastId = toast.message("Semester Create Loading");
 
     try {
       const res = await createSemesterRegistration(payload).unwrap();

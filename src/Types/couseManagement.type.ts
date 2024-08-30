@@ -1,7 +1,13 @@
+import { TAcademicSemester } from "./academicSemesterManage.type";
 
-
-export const semesterRegistrationStatus = [
-  { label: "UPCOMING", value: "UPCOMING" },
-  { label: "ONGOING", value: "ONGOING" },
-  { label: "ENDED", value: "ENDED" },
-];
+export interface TRegisteredSemester {
+  _id: string;
+  academicSemester: TAcademicSemester;
+  status: string;
+  startDate: string;
+  endDate: string;
+  minCredit: number;
+  maxCredit: number;
+  createdAt: string;
+  updatedAt: string;
+}

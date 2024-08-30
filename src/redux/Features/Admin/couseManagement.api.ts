@@ -1,27 +1,29 @@
 import { TQueryParamAcademicSemester, TReduxResponse } from "../../../Types";
+import { TRegisteredSemester } from "../../../Types/couseManagement.type";
+
 import { baseApi } from "../../api/baseApi";
 
 const courseManagementApi = baseApi.injectEndpoints({
   endpoints: (builder) => ({
-      getAllStudents: builder.query({
-        query: (args) => {
-          const params = new URLSearchParams();
-          if (args) {
-            args.forEach((item: TQueryParamAcademicSemester) => {
-              params.append(item.name, item.value as string);
-            });
-          }
+    getAllRegisteredSemester: builder.query({
+      query: (args) => {
+        const params = new URLSearchParams();
+        if (args) {
+          args.forEach((item: TQueryParamAcademicSemester) => {
+            params.append(item.name, item.value as string);
+          });
+        }
 
-          return {
-            url: "/students",
-            method: "GET",
-            params: params,
-          };
-        },
-        transformResponse: (response: TReduxResponse<TStudent[]>) => {
-          return response?.data;
-        },
-      }),
+        return {
+          url: "/semester-registrations",
+          method: "GET",
+          params: params,
+        };
+      },
+      transformResponse: (response: TReduxResponse<TRegisteredSemester[]>) => {
+        return response?.data;
+      },
+    }),
 
     createSemesterRegistration: builder.mutation({
       query: (body) => ({
@@ -33,4 +35,7 @@ const courseManagementApi = baseApi.injectEndpoints({
   }),
 });
 
-export const { useCreateSemesterRegistrationMutation } = courseManagementApi;
+export const {
+  useCreateSemesterRegistrationMutation,
+  useGetAllRegisteredSemesterQuery,
+} = courseManagementApi;
