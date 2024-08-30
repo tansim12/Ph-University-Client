@@ -1,20 +1,60 @@
 import React, { useState } from "react";
-import { Button, Space, Table } from "antd";
-import type { TableColumnsType, TableProps } from "antd";
+import { Button, Dropdown, Space, Table } from "antd";
+import type { MenuProps, TableColumnsType, TableProps } from "antd";
 
 import { TQueryParamAcademicSemester } from "../../../Types/global.type";
-import { useGetAllRegisteredSemesterQuery } from "../../../redux/Features/Admin/couseManagement.api";
+import {
+  useGetAllRegisteredSemesterQuery,
+  useStatusUpdateSemesterRegistrationMutation,
+} from "../../../redux/Features/Admin/couseManagement.api";
 import { TRegisteredSemester } from "../../../Types/couseManagement.type";
 import moment from "moment";
+import { semesterRegistrationStatus } from "../../../Const/courseManagement.const";
+import { toast } from "sonner";
+import { handleApiError } from "../../../utils/handleApiError";
 
 export type TTableData = Pick<
   TRegisteredSemester,
   "_id" | "startDate" | "endDate"
 >;
 
+const items: MenuProps["items"] = semesterRegistrationStatus.map((i) => ({
+  label: i?.value,
+  key: i?.value,
+}));
+
 const RegisteredSemester: React.FC = () => {
   const [params, setParams] = useState<TQueryParamAcademicSemester[]>([]);
   const { data, isFetching } = useGetAllRegisteredSemesterQuery(params);
+  const [updateStatus, { isLoading }] =
+    useStatusUpdateSemesterRegistrationMutation();
+  const [itemId, setItemId] = useState("");
+
+  const handleMenuClick: MenuProps["onClick"] = async (e) => {
+    if (itemId) {
+      const payload = {
+        _id: itemId,
+        body: { status: e.key },
+      };
+      const toastId = toast.message("Updating");
+
+      try {
+        const res = await updateStatus(payload).unwrap();
+        if (res?.success) {
+          toast.success("  Registered Semester Updating done", {
+            id: toastId,
+            duration: 3000,
+          });
+        }
+      } catch (error) {
+        handleApiError(error, toastId);
+      }
+    }
+  };
+  const menuProps = {
+    items,
+    onClick: handleMenuClick,
+  };
   const columns: TableColumnsType<TTableData> = [
     {
       title: "Academic Semester",
@@ -38,9 +78,11 @@ const RegisteredSemester: React.FC = () => {
       key: "action",
       render: (_, record) => (
         <Space size="middle">
-          <Button type="primary" onClick={() => handleUpdate(record._id)}>
-            Update
-          </Button>
+          <Dropdown menu={menuProps} trigger={["click"]}>
+            <Button onClick={() => setItemId(record?._id)}>
+              <Space>Update</Space>
+            </Button>
+          </Dropdown>
           <Button
             type="default"
             danger
@@ -78,6 +120,7 @@ const RegisteredSemester: React.FC = () => {
   const tableData = data?.map(
     ({ _id, academicSemester, startDate, endDate, status }) => ({
       key: _id,
+      _id,
       name: `${academicSemester?.name} ${academicSemester?.year}`,
       startDate: moment(new Date(startDate)).format("MMMM"),
       endDate: moment(new Date(endDate)).format("MMMM"),
@@ -85,21 +128,14 @@ const RegisteredSemester: React.FC = () => {
     })
   );
 
-  // Example handler functions for Update and Delete
-  const handleUpdate = (id: string) => {
-    console.log("Update clicked for id:", id);
-    // Implement update logic here
-  };
-
   const handleDelete = (id: string) => {
     console.log("Delete clicked for id:", id);
     // Implement delete logic here
   };
 
-
   return (
     <Table
-      loading={isFetching}
+      loading={isFetching || isLoading}
       columns={columns}
       dataSource={tableData as unknown as never}
       onChange={onChange}
