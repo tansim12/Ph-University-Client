@@ -10,8 +10,7 @@ import {
 } from "../../../redux/Features/Admin/couseManagement.api";
 import { toast } from "sonner";
 import { handleApiError } from "../../../utils/handleApiError";
-// import { toast } from "sonner";
-// import { handleApiError } from "../../../utils/handleApiError";
+
 
 const CreateCourse = () => {
   const [createCourses] = useCreateCoursesMutation();
