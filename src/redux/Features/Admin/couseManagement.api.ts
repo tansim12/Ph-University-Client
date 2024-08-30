@@ -80,7 +80,6 @@ const courseManagementApi = baseApi.injectEndpoints({
     }),
 
     // assign faculty by course
-
     createFacultiesByCourse: builder.mutation({
       query: (body) => ({
         url: `/courses/${body?.courseId}/assign-faculty`,
@@ -88,6 +87,19 @@ const courseManagementApi = baseApi.injectEndpoints({
         body: body?.data,
       }),
       invalidatesTags: ["AllCourse"],
+    }),
+
+    // assign faculties
+    getAssignFacultiesByCourse: builder.query({
+      query: (courseId) => {
+        return {
+          url: `/courses/assign-faculty/${courseId}`,
+          method: "GET",
+        };
+      },
+      transformResponse: (response: TReduxResponse<any>) => {
+        return response?.data;
+      },
     }),
   }),
 });
@@ -98,5 +110,6 @@ export const {
   useStatusUpdateSemesterRegistrationMutation,
   useGetAllCoursesQuery,
   useCreateCoursesMutation,
-  useCreateFacultiesByCourseMutation
+  useCreateFacultiesByCourseMutation,
+  useGetAssignFacultiesByCourseQuery,
 } = courseManagementApi;
