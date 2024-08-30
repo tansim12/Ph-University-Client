@@ -7,6 +7,7 @@ type TPHSelectProps = {
   options: { value: string; label: string; disabled?: boolean }[] | undefined;
   customStyle?: string;
   disabled?: boolean;
+  mode?: "multiple" | undefined;
 };
 
 const PHSelect = ({
@@ -15,6 +16,7 @@ const PHSelect = ({
   options,
   customStyle,
   disabled,
+  mode,
 }: TPHSelectProps) => {
   return (
     <div className={`${customStyle}`}>
@@ -23,6 +25,7 @@ const PHSelect = ({
         render={({ field, fieldState: { error } }) => (
           <Form.Item label={label}>
             <Select
+              mode={mode}
               style={{ width: "100%" }}
               {...field}
               options={options}

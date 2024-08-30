@@ -1,5 +1,8 @@
 import { TQueryParamAcademicSemester, TReduxResponse } from "../../../Types";
-import { TRegisteredSemester } from "../../../Types/couseManagement.type";
+import {
+  TCourses,
+  TRegisteredSemester,
+} from "../../../Types/couseManagement.type";
 
 import { baseApi } from "../../api/baseApi";
 
@@ -25,7 +28,6 @@ const courseManagementApi = baseApi.injectEndpoints({
       },
       providesTags: ["CourseManage"],
     }),
-
     createSemesterRegistration: builder.mutation({
       query: (body) => ({
         url: "/semester-registrations/create-semester-registration",
@@ -46,6 +48,36 @@ const courseManagementApi = baseApi.injectEndpoints({
       },
       invalidatesTags: ["CourseManage"],
     }),
+
+    // course
+    getAllCourses: builder.query({
+      query: (args) => {
+        const params = new URLSearchParams();
+        if (args) {
+          args.forEach((item: TQueryParamAcademicSemester) => {
+            params.append(item.name, item.value as string);
+          });
+        }
+
+        return {
+          url: "/courses",
+          method: "GET",
+          params: params,
+        };
+      },
+      transformResponse: (response: TReduxResponse<TCourses[]>) => {
+        return response?.data;
+      },
+      providesTags: ["AllCourse"],
+    }),
+    createCourses: builder.mutation({
+      query: (body) => ({
+        url: "/courses/create-course",
+        method: "POST",
+        body: body,
+      }),
+      invalidatesTags: ["AllCourse"],
+    }),
   }),
 });
 
@@ -53,4 +85,6 @@ export const {
   useCreateSemesterRegistrationMutation,
   useGetAllRegisteredSemesterQuery,
   useStatusUpdateSemesterRegistrationMutation,
+  useGetAllCoursesQuery,
+  useCreateCoursesMutation,
 } = courseManagementApi;
