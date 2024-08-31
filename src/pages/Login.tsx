@@ -21,8 +21,8 @@ const Login = () => {
     formState: { errors },
   } = useForm<IFromValue>({
     defaultValues: {
-      id: "A-0001",
-      password: "admin123456",
+      id: "2030030001",
+      password: "password1234",
     },
   });
 

@@ -5,8 +5,15 @@ import { adminPath } from "../../routes/route.admin";
 import { facultyPath } from "../../routes/route.faculty";
 import { studentPath } from "../../routes/route.student";
 import useAuthUserInfo from "../../hooks/useAuthUserInfo";
+import verifyToken from "../../utils/verifyToken";
 const Sidebar = () => {
-  const { user } = useAuthUserInfo();
+  const { token,  } = useAuthUserInfo();
+
+  let userData;
+  if (token) {
+    userData = verifyToken(token);
+  }
+  const user = userData?.data;
 
   const userRole = {
     ADMIN: "admin",
