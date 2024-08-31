@@ -52,7 +52,7 @@ const OfferCourse = () => {
     value: item?._id,
   }));
   const { data: assignFaculties } =
-    useGetAssignFacultiesByCourseQuery(courseId);
+    useGetAssignFacultiesByCourseQuery(courseId,{skip:!courseId});
 
   const assignFacultiesOptions = assignFaculties?.faculties?.map(
     (item: any) => ({
