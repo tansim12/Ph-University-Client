@@ -28,14 +28,18 @@ export const router = createBrowserRouter([
   //   admin routes
   {
     path: "/admin",
-    element: <App />,
+    element: (
+      <PrivateRoute role="admin">
+        <App />
+      </PrivateRoute>
+    ),
     children: adminRoutes,
   },
   //   student routes
   {
     path: "/student",
     element: (
-      <PrivateRoute>
+      <PrivateRoute role="student">
         <App />
       </PrivateRoute>
     ),
@@ -43,7 +47,11 @@ export const router = createBrowserRouter([
   },
   {
     path: "/faculty",
-    element: <App />,
+    element: (
+      <PrivateRoute role="faculty">
+        <App />
+      </PrivateRoute>
+    ),
     children: facultyRoutes,
   },
   {
